@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.Security.Policy;
+using System.Net.Http;
+using System.Threading;
 
 namespace Steam_Scam_Baiter
 {
@@ -49,7 +51,53 @@ namespace Steam_Scam_Baiter
             int j = random.Next(passwords.Length);
             int randomNumber = random.Next(1990, 100000);
 
-            payloadTextBox.Text = "Username: " + names[i] + randomNumber.ToString() + "  Password: " + passwords[j];
+            payloadTextBox.Text = "login: " + names[i] + randomNumber.ToString() + " password: " + passwords[j];
+        }
+
+        private void nukeWebhook_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to permanently delete this web hook?", "Confirmation",
+                                      MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                attemptDisableWebhookAsync();
+            }
+            else
+            {
+
+            }
+        }
+
+        async Task attemptDisableWebhookAsync()
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.DeleteAsync(webhookTextBox.Text);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        WebClient wc = new WebClient();
+                        string webhookurl = webhookTextBox.Text;
+                        wc.Headers.Add("Content-Type", "application/json");
+                        string payload = "{\"content\": \"" + "Deleting this webhook. -KingsleydotDev" + "\"}";
+                        wc.UploadData(webhookurl, Encoding.UTF8.GetBytes(payload));
+                        Thread.Sleep(1000);
+                        MessageBox.Show("Webhook deleted successfully.");
+                    }
+                    else
+                    {
+                        string errorContent = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show(errorContent);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception occurred: {ex.Message}");
+            }
         }
     }
 }

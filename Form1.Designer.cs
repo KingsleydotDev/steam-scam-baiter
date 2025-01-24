@@ -34,6 +34,7 @@
             this.payloadTextBox = new System.Windows.Forms.TextBox();
             this.sendPayload = new System.Windows.Forms.Button();
             this.generatePayload = new System.Windows.Forms.Button();
+            this.nukeWebhook = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // webhookTextBox
@@ -90,11 +91,22 @@
             this.generatePayload.UseVisualStyleBackColor = true;
             this.generatePayload.Click += new System.EventHandler(this.generatePayload_Click);
             // 
+            // nukeWebhook
+            // 
+            this.nukeWebhook.Location = new System.Drawing.Point(164, 278);
+            this.nukeWebhook.Name = "nukeWebhook";
+            this.nukeWebhook.Size = new System.Drawing.Size(75, 48);
+            this.nukeWebhook.TabIndex = 6;
+            this.nukeWebhook.Text = "Delete Webhook";
+            this.nukeWebhook.UseVisualStyleBackColor = true;
+            this.nukeWebhook.Click += new System.EventHandler(this.nukeWebhook_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(409, 335);
+            this.Controls.Add(this.nukeWebhook);
             this.Controls.Add(this.generatePayload);
             this.Controls.Add(this.sendPayload);
             this.Controls.Add(this.payloadTextBox);
@@ -116,6 +128,7 @@
         private System.Windows.Forms.TextBox payloadTextBox;
         private System.Windows.Forms.Button sendPayload;
         private System.Windows.Forms.Button generatePayload;
+        private System.Windows.Forms.Button nukeWebhook;
     }
 }
 
